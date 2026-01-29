@@ -1,0 +1,65 @@
+<section>
+    <div class="acr-box">
+        <div class="row g-2 mb-2">
+            <div class="col-xxl-4 col-xl-3">
+                <div class="acr-input-group" [formGroup]="searchForm">
+                    <img src="assets/images/icons/search-info.svg" width="16" height="16">
+                    <input type="text" formControlName="searchText" class="w-100" placeholder="Search for a specific split sheet" (input)="searchChanges()">
+                </div>
+            </div>
+        </div>
+        <div class="light-gray-table-border rounded-2 mt-4">
+            <table class="acrylic-table" >
+                <thead>
+                    <tr>
+                        <th scope="col">Track Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Date</th>
+                        <th scope="col" width="70"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of splitSheets; track item) {
+                        <tr>
+                        <td>
+                            <div class="d-flex-align-center">
+                                <div>
+                                    <img [ngSrc]="item.track_cover_image ? item.track_cover_image : 'assets/images/others/default.jpg'" height="36" width="36"
+                                        class="radius-5" />
+                                </div>
+                                <div class="ms-2">
+                                    <span class="d-block">{{ item.track ? item.track.name : item.track_name }}</span>
+                                    <span class="text-warning small">{{ item.track ? item.track.isrc : item.isrc }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            @if (item.status) {
+                                <small class="tb-pill" [ngClass]="item.status.toLowerCase().includes('signed') ? 'success':'created'">{{item.status}}</small>
+                            } @else {
+                                <small class="tb-pill">PENDING</small>
+                            }
+                        </td>
+                        <td>
+                            {{ (item.updated ? item.updated : item.created) | date:'MMM d, YYYY' }}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-acrylic" (click)="goToPreview(item.uuid)">
+                                <img src="assets/images/icons/eye.svg" alt="side_icon" width="16" height="16">
+                            </button>
+                        </td>
+                        </tr>
+                    } @empty {
+                        <tr>
+                            <td class="text-center" colspan="4">
+                                No data available
+                            </td>
+                        </tr>
+                    } 
+                </tbody>
+            </table>
+            <acrylic-pagination [tableData]="splitSheets" [totalPages]="totalCount" (pageChange)="onPageChange($event)">
+              </acrylic-pagination>
+        </div>
+    </div>
+</section>

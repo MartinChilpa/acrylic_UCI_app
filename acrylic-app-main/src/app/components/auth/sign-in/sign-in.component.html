@@ -1,0 +1,56 @@
+<form [formGroup]="signInForm">
+    <h1 class="auth-tagline">Welcome Back</h1>
+    <ng-container>
+        <div>
+            <div class="acr-input-label required">Email</div>
+            <input type="text" [formControlName]="'username'" class="form-control acr-input" placeholder="Enter email"
+                autocomplete="off" readonly onfocus="this.removeAttribute('readonly');">
+            @if(signInForm.get('username')?.invalid && (signInForm.get('username')?.dirty ||
+            signInForm.get('username')?.touched)) {
+            <div class="acr-input-label small text-danger">
+                @if(signInForm.get('username')?.errors?.['email']) {
+                <div> Please enter a valid email. </div>
+                }
+            </div>
+            }
+        </div>
+
+        <div class="my-3">
+            <div class="d-flex-between">
+                <div class="acr-input-label required">Password</div>
+                <a class="d-flex justify-content-end a-blue" (click)="_navigationService.navigateToForgotPassword();">
+                    <small>
+                        Forgot Password?
+                    </small>
+                </a>
+            </div>
+
+            <div class="position-relative">
+                <input [type]="showPassword ? 'text' : 'password'" [formControlName]="'password'"
+                    class="form-control acr-input" placeholder="Enter Password" autocomplete="off" readonly
+                    onfocus="this.removeAttribute('readonly');">
+                <img ngSrc="assets/images/icons/{{ showPassword ? 'eye-slash.svg' : 'eye.svg' }}" class="eye-icon"
+                    width="16" height="16" (click)="showPassword = !showPassword">
+            </div>
+        </div>
+
+
+        <button type="button" class="btn w-100 btn-main fw-bold h-50px" [disabled]="signInForm.invalid"
+            (click)="signIn()">Sign In
+        </button>
+    </ng-container>
+
+    <div class="d-flex-center my-3">
+        <div class="line"></div>
+        <div class="mx-3">Or</div>
+        <div class="line"></div>
+    </div>
+
+    <!-- <acrylic-social-login-button></acrylic-social-login-button> -->
+
+    <div class="mt-3">
+        <span>Don’t have an account?</span>
+        <a class="a-blue ms-2" (click)="_navigationService.navigateToSignUp();">Sign Up</a>
+    </div>
+
+</form>

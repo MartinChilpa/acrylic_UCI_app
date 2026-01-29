@@ -1,0 +1,42 @@
+.acrylic-stepper {
+    .list-group-item {
+        color: var(--light-gray-text-color);
+
+        span {
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            background-color: var(--light-gray-border-color);
+        }
+
+        &.current-edit-stepper {
+            background: transparent !important;
+            color: var(--beige-color);
+
+            span {
+                background-color: var(--beige-color);
+            }
+        }
+
+        &.current-active-stepper {
+            background-color: var(--light-gray-border-color) !important;
+            color: var(--beige-color);
+        }
+
+        &.current-active-stepper {
+            span {
+                background-color: var(--beige-color);
+            }
+        }
+
+        &.completed-step {
+            span {
+                background-image: url('/assets/images/icons/green-check.svg');
+                background-repeat: no-repeat;
+                background-position: center;
+                color: transparent !important;
+                background-color: var(--darkgreen-color);
+            }
+        }
+    }
+}

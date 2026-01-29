@@ -1,0 +1,31 @@
+<div class="row gy-3">
+    <div class="col-lg-7 col-12 order-2 order-lg-1">
+        <ng-container #acrylicSynclistRef></ng-container>
+    </div>
+    <div class="col-lg-5 col-12 order-1 order-lg-2">
+        <div class="acr-box">
+            <ul class="list-group acrylic-stepper">
+                @for(item of manageStepperList; track item) {
+                <li class="list-group-item bg-transparent light-gray-border d-flex-align-center gap-2 cursor-pointer"
+                    (click)="manageStepper($index + 1)"
+                    [ngClass]="{ 'current-edit-stepper': synclistForm.valid && synclistId, 'current-active-stepper': activeStepper === $index + 1, 'completed-step': activeStepper > $index + 1}">
+                    <span class="d-flex-center text-secondary fw-bold">{{ $index + 1 }}</span>
+                    {{ item }}
+                </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="my-4">
+    <div class="row gap-2">
+        <div class="col-lg-6 col-12">
+            <div class="d-flex-center">
+                <button class="btn btn-acrylic px-4 px-lg-5 py-2 me-3" (click)="backProfile()">Back</button>
+                <button class="btn btn-info px-4 px-lg-5 py-2" [disabled]="activeStepper == 1 && !synclistForm.valid"
+                    (click)="publish()">Publish</button>
+            </div>
+        </div>
+    </div>
+</div>

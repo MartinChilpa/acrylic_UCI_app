@@ -1,0 +1,42 @@
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-body bg-darkgrey radius-5 p-0">
+            <div class="p-3">
+                <div class="d-flex-justify-between align-items-center px-2">
+                    <h6 class="mb-0">Are You Sure?</h6>
+                    <button class="bg-transparent border-0" data-bs-dismiss="modal"><img
+                            ngSrc="/assets/images/icons/close.svg" alt="close" width="20" height="20" /></button>
+                </div>
+                @if(selectedPrice){
+                <div class="bg-light-gray p-3 radius-5 card-beige-border my-3">
+                    <h6 class="text-beige">{{selectedPrice.name}}</h6>
+                    <p class="mt-3">{{selectedPrice.description}}</p>
+                    <div class="line bg-lightgray-border my-3"></div>
+                    <div class="acr-box bg-light-gray text-center p-1">
+                        <p class="mb-0 text-light-gray">Available:</p>
+                        @if(selectedPrice.available_tracks != 0){
+                        <p>{{selectedPrice.available_tracks}}</p>
+                        }
+                        @else{
+                        <p>{{selectedPrice.available_tracks}}/{{selectedPrice.max_artist_tracks}}</p>
+                        }
+                    </div>
+                    <button class="btn btn-info mt-3 h-50px w-100">
+                        Price: From ${{selectedPrice.min_price}} to ${{selectedPrice.max_price}}
+                    </button>
+                </div>
+                }
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+                        <button class="btn-lightgray radius-5 w-100 py-2 light-gray-border" (click)="publishTrack()"
+                            data-bs-dismiss="modal">Yes, I’m sure</button>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <button class="btn-warning radius-5 w-100 py-2 light-gray-border" data-bs-dismiss="modal">No,
+                            cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

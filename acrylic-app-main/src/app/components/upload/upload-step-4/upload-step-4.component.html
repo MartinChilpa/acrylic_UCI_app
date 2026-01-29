@@ -1,0 +1,53 @@
+<section>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="acr-box">
+                <p class="mb-2">Preview Your Track</p>
+                <div class="d-flex-align-center gap-2">
+                    <div>
+                        <img [src]="trackInfo ? trackInfo.image : 'assets/images/others/default.jpg'" height="70"
+                            width="70" alt="track-img" class="radius-5 me-2" />
+                    </div>
+                    @if (trackInfo) {
+                    <div class="d-flex flex-column">
+                        <span>{{ trackInfo.name }}</span>
+                        <small>{{ trackInfo.artist }}</small>
+                        <small class="mt-1 text-beige">{{ trackInfo.duration | duration }}</small>
+                        @if (form.value['tags']?.length) {
+                        <div class="mt-3 d-flex gap-2">
+                            @for (item of form.value['tags']; track item) {
+                            <span class="bg-light-gray px-2 py-1 radius-5">{{ item }}</span>
+                            }
+                        </div>
+                        }
+                    </div>
+                    }
+                    @else {
+                    <div>
+                        <div class="mb-0 mt-2 text-warning">
+                            The track with ISRC {{form.get('isrc')?.value}} cannot be previewed.
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-4">
+        <div class="row gap-2">
+            <div class="col-12">
+                <div class="row justify-content-center gy-2">
+                    <div class="col-md-5 col-12 text-end">
+                        <button class="btn btn-acrylic px-4 px-lg-5 py-2 light-gray-border"
+                            (click)="nextUploadStepper(2)">Back</button>
+                    </div>
+                    <div class="col-md-5 col-12">
+                        <button class="btn btn-info px-4 px-lg-5 py-2 light-gray-border"
+                            (click)="nextUploadStepper(4)">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,128 @@
+<section>
+    <form [formGroup]="form" class="row gy-3 gx-2">
+        <div class="col-lg-6 col-12">
+            <div class="acr-box">
+                <h6>Is it a cover or someone else’s song?</h6>
+                <div class="bg-darkgrey w-100 radius-5 p-1">
+                    <input type="radio" class="btn-check acrylic-radio" id="cover-song" autocomplete="off"
+                        formControlName="is_cover" [value]="true" (change)="checkCover()" data-bs-toggle="modal"
+                        data-bs-target="#cover-popup">
+                    <label class="btn w-50" for="cover-song">Yes</label>
+                    <input type="radio" class="btn-check acrylic-radio " id="not-cover-song" autocomplete="off"
+                        formControlName="is_cover" [value]="false">
+                    <label class="btn w-50" for="not-cover-song">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="acr-box">
+                <h6>Is it a remix?</h6>
+                <div class="bg-darkgrey w-100 radius-5 p-1">
+                    <input type="radio" class="btn-check acrylic-radio " formControlName="is_remix" id="remix-song"
+                        autocomplete="off" [value]="true">
+                    <label class="btn w-50" for="remix-song">Yes</label>
+                    <input type="radio" class="btn-check acrylic-radio " formControlName="is_remix" id="not-remix-song"
+                        autocomplete="off" [value]="false">
+                    <label class="btn w-50" for="not-remix-song">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="acr-box">
+                <h6>Is it an instrumental?</h6>
+                <div class="bg-darkgrey w-100 radius-5 p-1">
+                    <input type="radio" class="btn-check acrylic-radio " formControlName="is_instrumental"
+                        id="instrumental" autocomplete="off" [value]="true">
+                    <label class="btn w-50" for="instrumental">Yes</label>
+                    <input type="radio" class="btn-check acrylic-radio " formControlName="is_instrumental"
+                        id="not-instrumental" autocomplete="off" [value]="false">
+                    <label class="btn w-50" for="not-instrumental">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="acr-box">
+                <h6>Does the song contain explicit lyrics?</h6>
+                <div class="bg-darkgrey w-100 radius-5 p-1">
+                    <input type="radio" class="btn-check acrylic-radio" formControlName="is_explicit"
+                        id="explicit-lyrics" autocomplete="off" [value]="true">
+                    <label class="btn w-50" for="explicit-lyrics">Yes</label>
+                    <input type="radio" class="btn-check acrylic-radio " formControlName="is_explicit"
+                        id="not-explicit-lyrics" autocomplete="off" [value]="false">
+                    <label class="btn w-50" for="not-explicit-lyrics">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="acr-box">
+                <div class="acr-input-label">Your Track ISRC Code</div>
+                <input type="text" id="isrc-code" formControlName="isrc" acrylicPreventTypingIfDisabled
+                    class="form-control acr-input" placeholder="ISRC Code" autocomplete="off">
+                @if (form.get('isrc')?.errors?.['pattern']) {
+                <div class="text-danger mt-1">
+                    Please enter valid ISRC code.
+                </div>
+                }
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="acr-box">
+                <acrylic-custom-dropdown [title]="'Select Distributor Or Label Contact'"
+                    [inputValue]="form.get('distributor')?.value" [values]="distributors"
+                    (dropdownSelected)="dropdownSelected($event)"></acrylic-custom-dropdown>
+            </div>
+        </div>
+        @if(isDistributorNameRequired) {
+        <div class="col-12">
+            <div class="acr-box">
+                <div class="acr-input-label required">Name Of Distributor Or Label Contact</div>
+                <input type="text" formControlName="other_distributor" class="form-control acr-input"
+                    placeholder="Name Of Distributor Or Label Contact" autocomplete="off">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="acr-box">
+                <div class="acr-input-label required">Email Of Distributor Or Label Contact</div>
+                <input type="text" formControlName="other_distributor_email" class="form-control acr-input"
+                    placeholder="Email Of Distributor Or Label Contact" autocomplete="off">
+            </div>
+        </div>
+        }
+    </form>
+    <div class="my-4">
+        <div class="row gap-2">
+            <div class="col-12">
+                <div class="row justify-content-center gy-2">
+                    <div class="col-md-5 col-12 text-end">
+                        <button class="btn btn-acrylic px-4 px-lg-5 py-2 light-gray-border"
+                            (click)="nextUploadStepper(1)">Back</button>
+                    </div>
+                    <div class="col-md-5 col-12">
+                        <button class="btn btn-info px-4 px-lg-5 py-2 light-gray-border" (click)="nextUploadStepper(3)"
+                            [disabled]="!form.get('isrc')?.value || form.get('isrc')?.errors?.['pattern'] || (form.get('distributor')?.value == 'other' ? (!form.get('other_distributor')?.value || !form.get('other_distributor_email')?.value || form.get('other_distributor_email')?.errors?.['invalidEmail']) : false)">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="cover-popup" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body bg-darkgrey radius-5 p-0">
+                <div class="p-3">
+                    <div class="d-flex-justify-between px-2">
+                        <h6>Notice</h6>
+                        <button class="bg-transparent border-0" data-bs-dismiss="modal">
+                            <img src="assets/images/icons/close.svg" alt="close" width="20" height="20" />
+                        </button>
+                    </div>
+                    <div class="bg-light-gray p-3 radius-5 mt-3 text-warning">
+                        Acrylic does not yet support covers
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
